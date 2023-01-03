@@ -34,7 +34,7 @@ class MySuperFormatter(CryptoFormatter):
 handler.setFormatter(
     MySuperFormatter(
         encryptor=MD5HashEncryptor(),
-        fields={
+        secret_keys={
             'secret_field', 'secret_field1', 'secret_field2',
         },
     ),

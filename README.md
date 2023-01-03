@@ -41,21 +41,55 @@ class MySuperFormatter(CryptoFormatter):
 handler.setFormatter(
     MySuperFormatter(
         encryptor=MD5HashEncryptor(),
-        fields={
+        secret_keys={
             'secret_field', 'secret_field1', 'secret_field2',
         },
     ),
 )
 logger.addHandler(handler)
+```
 
+```python
 logger.info('String')
+>>> {"timestamp": "2023-01-03T18:04:48.401535", "application": "my_super_application", "message": {"content": {"text": "String"}}, "system": "backend"}
+```
+
+```python
 logger.info(1)
+>>> {"timestamp": "2023-01-03T18:04:48.401584", "application": "my_super_application", "message": {"content": {"text": 1}}, "system": "backend"}
+```
+
+```python
 logger.info(1.6)
+>>> {"timestamp": "2023-01-03T18:04:48.401614", "application": "my_super_application", "message": {"content": {"text": 1.6}}, "system": "backend"}
+```
+
+```python
 logger.info(b'hello')
+>>> {"timestamp": "2023-01-03T18:04:48.401641", "application": "my_super_application", "message": {"content": {"text": "b'hello'"}}, "system": "backend"}
+```
+
+```python
 logger.info(None)
+>>> {"timestamp": "2023-01-03T18:04:48.401664", "application": "my_super_application", "message": {"content": {"text": null}}, "system": "backend"}
+```
+
+```python
 logger.info([1, 1.5, 'hello', b'hello'])
+>>> {"timestamp": "2023-01-03T18:04:48.401685", "application": "my_super_application", "message": {"content": {"text": [1, 1.5, "hello", "b'hello'"]}}, "system": "backend"}
+```
+
+```python
 logger.info((1, 1.5, 'hello', b'hello'))
+>>> {"timestamp": "2023-01-03T18:04:48.401709", "application": "my_super_application", "message": {"content": {"text": [1, 1.5, "hello", "b'hello'"]}}, "system": "backend"}
+```
+
+```python
 logger.info({1, 1.5, 'hello', b'hello'})
+>>> {"timestamp": "2023-01-03T18:04:48.401731", "application": "my_super_application", "message": {"content": {"text": "{1, 'hello', 1.5, b'hello'}"}}, "system": "backend"}
+```
+
+```python
 logger.info(
     {
         'field': 'value',
@@ -110,5 +144,70 @@ logger.info(
             },
         ],
     },
-)
+)  
+
+>>> {
+    "timestamp":"2023-01-03T18:04:48.401761",
+    "application":"my_super_application",
+    "message":{
+        "content":{
+            "data":{
+                "field":"value",
+                "int_field":1,
+                "float_field":3.14,
+                "none_field":null,
+                "secret_field":"881671aa2bbc680bc530c4353125052b",
+                "nested_field":{
+                    "secret_field":"881671aa2bbc680bc530c4353125052b"
+                },
+                "list_field":[
+                    "element1",
+                    "element2"
+                ],
+                "tuple_field":[
+                    "t_elem1",
+                    "t_elem2"
+                ],
+                "list_of_secret_data":[
+                    {
+                        "secret_field":"881671aa2bbc680bc530c4353125052b",
+                        "not_secret_field":"value"
+                    },
+                    {
+                        "secret_field":"881671aa2bbc680bc530c4353125052b",
+                        "not_secret_field":"value"
+                    },
+                    [
+                        {
+                            "secret_field1":"1711df9f5b96b2802fbddf18dec7c570"
+                        }
+                    ],
+                    {
+                        "secret_field":"c4ca4238a0b923820dcc509a6f75849b"
+                    },
+                    {
+                        "secret_field":"4beed3b9c4a886067de0e3a094246f78"
+                    },
+                    {
+                        "secret_field":"f79408e5ca998cd53faf44af31e6eb45"
+                    },
+                    {
+                        "not_secret":{
+                            "not_secret":{
+                                "not_secret":{
+                                    "not_secret":{
+                                        "not_secret":{
+                                            "secret_field2":"37a6259cc0c1dae299a7866489dff0bd"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "system":"backend"
+}
 ```
