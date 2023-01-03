@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cryptologging"
-version = "0.1.0"
+version = "1.0.0"
 description = "Log encryption"
 authors = [
     "Cheldaev Alexey <alexothers35@gmail.com>",
